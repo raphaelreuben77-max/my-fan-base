@@ -1,1 +1,0 @@
-const express=require("express"),auth=require("../middleware/auth");module.exports=pool=>{const r=express.Router();r.get("/",auth,async(req,res)=>{let q=await pool.query("SELECT id,type,message,created_at,read_at FROM notifications WHERE user_id=$1 ORDER BY created_at DESC LIMIT 50",[req.user.id]);res.json({notifications:q.rows})});return r};
