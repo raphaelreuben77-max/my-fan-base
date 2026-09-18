@@ -1,0 +1,1 @@
+const auth=require("./auth");module.exports=pool=>[auth,async(req,res,next)=>{try{const q=await pool.query("SELECT role FROM users WHERE id=$1",[req.user.id]);if(!q.rowCount||q.rows[0].role!=="admin")return res.status(403).json({error:"Admin access required"});next()}catch(e){res.status(500).json({error:"Authorization check failed"})}}];
