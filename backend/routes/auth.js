@@ -1,0 +1,1 @@
+const jwt=require("jsonwebtoken");module.exports=async(req,res,next)=>{const h=req.headers.authorization||"",t=h.startsWith("Bearer ")?h.slice(7):req.cookies?.jc_session;if(!t)return res.status(401).json({error:"Authentication required"});try{req.user=jwt.verify(t,process.env.JWT_SECRET);next()}catch(e){res.status(401).json({error:"Invalid or expired session"})}};
